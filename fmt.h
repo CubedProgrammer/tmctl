@@ -7,45 +7,28 @@
 
 // You should have received a copy of the GNU General Public License along with tmctl. If not, see <https://www.gnu.org/licenses/>. 
 
-#include<stdio.h>
+#ifndef Included_fmt_h
+#define Included_fmt_h
 
-void up(unsigned q)
-{
-    if(q)
-        printf("\033\133%uA", q);
-}
+#define BLACK 30
+#define RED 31
+#define GREEN 32
+#define YELLOW 33
+#define BLUE 34
+#define MAGENTA 35
+#define CYAN 36
+#define WHITE 37
 
-void down(unsigned q)
-{
-    if(q)
-        printf("\033\133%uB", q);
-}
+void resetfmt(void);
+void boldfmt(void);
+void faintfmt(void);
+void italicfmt(void);
+void underlinefmt(void);
+void crossfmt(void);
+void fgfmt8(int col);
+void fgfmt(int col);
+void bgfmt8(int col);
+void bgfmt(int col);
+void overlinefmt(void);
 
-void right(unsigned q)
-{
-    if(q)
-        printf("\033\133%uC", q);
-}
-
-void left(unsigned q)
-{
-    if(q)
-        printf("\033\133%uD", q);
-}
-
-void nxtln(unsigned q)
-{
-    if(q)
-        printf("\033\133%uE", q);
-}
-
-void prvln(unsigned q)
-{
-    if(q)
-        printf("\033\133%uF", q);
-}
-
-void setpos(unsigned r, unsigned c)
-{
-    printf("\033\133%u;%uH", r, c);
-}
+#endif
