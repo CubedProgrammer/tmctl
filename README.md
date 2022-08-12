@@ -60,6 +60,9 @@ n to move to next lines, one value, how many lines to move.
 p to move to previous lines, one value, how many lines to move.
 s to set the position, top left corner is 1 1, two values, row, and column.
 ```
+If value is not provided, relative movement commands default to 1.
+True colour defaults to black background and white foreground.
+
 Examples
 ```
 tmctl ur 5 7

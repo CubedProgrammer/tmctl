@@ -9,13 +9,16 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#ifdef _WIN32
+#include<windows.h>
+#endif
 #include"fmt.h"
 #include"mvmnt.h"
 
 #define MAJOR 1
-#define MINOR 1
+#define MINOR 2
 
-unsigned parsecmd(const char *cmd, char **next)
+unsigned parsecmd(const char *cmd, char **next, unsigned len)
 {
     unsigned used = 0;
     unsigned x, y;
@@ -69,8 +72,14 @@ unsigned parsecmd(const char *cmd, char **next)
                 fgfmt8(WHITE);
                 break;
             case'a':
-                fgfmt(strtol(next[used], NULL, 16));
-                ++used;
+                if(used == len)
+                    y = 0xffffff;
+                else
+                {
+                    y = strtol(next[used], NULL, 16);
+                    ++used;
+                }
+                fgfmt(y);
                 break;
             case'K':
                 bgfmt8(BLACK);
@@ -97,37 +106,73 @@ unsigned parsecmd(const char *cmd, char **next)
                 bgfmt8(WHITE);
                 break;
             case'A':
-                bgfmt(strtol(next[used], NULL, 16));
-                ++used;
+                if(used == len)
+                    y = 0;
+                else
+                {
+                    y = strtol(next[used], NULL, 16);
+                    ++used;
+                }
+                bgfmt(y);
                 break;
             case'u':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 up(x);
                 break;
             case'd':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 down(x);
                 break;
             case'h':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 right(x);
                 break;
             case'l':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 left(x);
                 break;
             case'n':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 nxtln(x);
                 break;
             case'p':
-                x = atoi(next[used]);
-                ++used;
+                if(used == len)
+                    x = 1;
+                else
+                {
+                    x = atoi(next[used]);
+                    ++used;
+                }
                 prvln(x);
                 break;
             case's':
@@ -145,6 +190,13 @@ unsigned parsecmd(const char *cmd, char **next)
 
 int main(int argl, char *argv[])
 {
+#ifdef _WIN32
+    DWORD cm;
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+    GetConsoleMode(out, &cm);
+    cm |= ENABLE_VIRTUAL_TERMINAL_PROCESSING
+    SetConsoleMode(out, cm);
+#endif
     int succ = 0;
     if(argl == 1)
     {
@@ -157,12 +209,14 @@ int main(int argl, char *argv[])
         puts("\nLet n be the value for a command.");
         puts("Commands u, d, h, and l, moves n characters up, down, right, and left, respectively.");
         puts("Commands n and p moves to the next and previous line, respectively, n times.");
+        puts("Defaults to moving one unit");
         puts("Command s sets the position to row r and column c, where r is the first value, and c is the second.");
         puts("Text formatting");
         puts("Commands o, f, i, e, t, and v sets bold, faint, italic, underline, strikethrough, and overline respectively.");
         puts("Commands k, r, g, y, b, m, c, w sets the foreground colour.");
         puts("Capitalized sets background colour.");
         puts("Commands a and A sets foreground or background colour to a true colour, based on next hexadecimal value.");
+        puts("Defaults to white for foreground and black for background");
         puts("Command . will reset formatting to normal.");
         printf("Example: '%s pr 3 5' moves to the beginning of the line three lines previous, and then five to the right.\n", *argv);
     }
@@ -171,7 +225,7 @@ int main(int argl, char *argv[])
         int nextarg = 0;
         for(int i = 1; i < argl; ++i)
         {
-            nextarg = i + parsecmd(argv[i], argv + i + 1);
+            nextarg = i + parsecmd(argv[i], argv + i + 1, argl - i - 1);
             if(nextarg)
                 i = nextarg, nextarg = 0;
         }
