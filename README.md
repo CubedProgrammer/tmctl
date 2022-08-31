@@ -28,6 +28,7 @@ Commands can be grouped together in the same argument.
 
 ```
 . to reset all text formatting, text formatting is set back to normal.
+I to start interactive mode, press q to quit. Must be lowercase q.
 o to bold
 f to faint.
 i to italic.

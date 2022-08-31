@@ -13,10 +13,11 @@
 #include<windows.h>
 #endif
 #include"fmt.h"
+#include"interactive.h"
 #include"mvmnt.h"
 
 #define MAJOR 1
-#define MINOR 2
+#define MINOR 3
 
 unsigned parsecmd(const char *cmd, char **next, unsigned len)
 {
@@ -28,6 +29,9 @@ unsigned parsecmd(const char *cmd, char **next, unsigned len)
         {
             case'.':
                 resetfmt();
+                break;
+            case'I':
+                interactive();
                 break;
             case'o':
                 boldfmt();
@@ -217,6 +221,7 @@ int main(int argl, char *argv[])
         puts("Capitalized sets background colour.");
         puts("Commands a and A sets foreground or background colour to a true colour, based on next hexadecimal value.");
         puts("Defaults to white for foreground and black for background");
+        puts("Command I will start interactive mode, press q to exit.");
         puts("Command . will reset formatting to normal.");
         printf("Example: '%s pr 3 5' moves to the beginning of the line three lines previous, and then five to the right.\n", *argv);
     }

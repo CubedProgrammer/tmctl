@@ -9,13 +9,15 @@
 
 CC=clang
 OPTIONS=-std=c99 -O3 -c
-all: fmt.o mvmnt.o tmctl.o
-	${CC} -o tmctl.out fmt.o mvmnt.o tmctl.o
+all: fmt.o interactive.o mvmnt.o tmctl.o
+	${CC} -o tmctl.out fmt.o interactive.o mvmnt.o tmctl.o
 fmt.o: fmt.c
 	${CC} ${OPTIONS} fmt.c
+interactive.o: interactive.c
+	${CC} ${OPTIONS} interactive.c
 mvmnt.o: mvmnt.c
 	${CC} ${OPTIONS} mvmnt.c
-tmctl.o: fmt.h mvmnt.h tmctl.c
+tmctl.o: fmt.h interactive.h mvmnt.h tmctl.c
 	${CC} ${OPTIONS} tmctl.c
 install:
 	mv tmctl.out /usr/local/bin/tmctl

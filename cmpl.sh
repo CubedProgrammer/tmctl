@@ -7,5 +7,5 @@
 
 # You should have received a copy of the GNU General Public License along with tmctl. If not, see <https://www.gnu.org/licenses/>. 
 
-clang -std=c99 -O3 -c fmt.c mvmnt.c tmctl.c
-clang -o tmctl.out fmt.o mvmnt.o tmctl.o
+clang -std=c99 -O3 -c fmt.c interactive.c mvmnt.c tmctl.c
+clang -o tmctl.out fmt.o interactive.o mvmnt.o tmctl.o
