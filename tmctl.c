@@ -17,7 +17,7 @@
 #include"mvmnt.h"
 
 #define MAJOR 1
-#define MINOR 3
+#define MINOR 4
 
 unsigned parsecmd(const char *cmd, char **next, unsigned len)
 {
@@ -202,6 +202,7 @@ int main(int argl, char *argv[])
     SetConsoleMode(out, cm);
 #endif
     int succ = 0;
+    setvbuf(stdout, NULL, _IONBF, 0);
     if(argl == 1)
     {
         printf("%s [COMMANDS...] [VALUES...]\n", *argv);

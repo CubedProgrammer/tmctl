@@ -3,20 +3,19 @@ Move the caret around in your terminal.
 
 ## Compilation
 ```
-clang -std=c99 -O3 -c mvmnt.c tmctl.c
-clang -o tmctl mvmnt.o tmctl.o
+clang -std=c99 -O3 -c fmt.c interactive.c mvmnt.c tmctl.c
+clang -o tmctl fmt.o interactive.o mvmnt.o tmctl.o
 ```
 ## Installation
 To install, move the generted executable to a directory in your PATH, such as /usr/local/bin.
 
 Alternatively, if you have bash, you can run ./cmpl.sh, then ./install.sh.
-If you have make, you can also do the usual make make install.
 
 Helpful shell aliases
 ```
 alias up='tmctl u'
 alias down='tmctl d'
-alias right='tmctl r'
+alias right='tmctl h'
 alias left='tmctl l'
 alias nxtln='tmctl n'
 alias prvln='tmctl p'
