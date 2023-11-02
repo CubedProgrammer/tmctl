@@ -18,6 +18,7 @@
 #define MAGENTA 35
 #define CYAN 36
 #define WHITE 37
+#define DEFAULT_COLOUR 39
 
 void resetfmt(void);
 void boldfmt(void);

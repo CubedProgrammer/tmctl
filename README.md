@@ -42,6 +42,7 @@ b to set foreground to blue.
 m to set foreground to magenta.
 c to set foreground to cyan.
 w to set foreground to white.
+F to set foreground to default.
 a to set foreground to true colour, all colours are available, argument must be hexadecimal value for the colour.
 K to set background to black.
 R to set background to red.
@@ -51,6 +52,7 @@ B to set background to blue.
 M to set background to magenta.
 C to set background to cyan.
 W to set background to white.
+O to set background to default.
 A to set background to true colour, all colours are available, argument must be hexadecimal value for the colour.
 u to move up, one value, how many lines to move.
 d to move down, one value, how many lines to move.

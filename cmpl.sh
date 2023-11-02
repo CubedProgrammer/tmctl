@@ -7,5 +7,16 @@
 
 # You should have received a copy of the GNU General Public License along with tmctl. If not, see <https://www.gnu.org/licenses/>. 
 
-clang -std=c99 -O3 -c fmt.c interactive.c mvmnt.c tmctl.c
+opts='-std=c99 -O3 -c'
+files='fmt interactive mvmnt tmctl'
+for i in $files; do
+    objtime=0
+    if test -e ${i}.o; then
+        objtime=$(stat -c %Y ${i}.o)
+    fi
+    srctime=$(stat -c %Y ${i}.c)
+    if test $objtime -le $srctime; then
+        cc $opts ${i}.c
+    fi
+done
 clang -o tmctl.out fmt.o interactive.o mvmnt.o tmctl.o
