@@ -18,7 +18,7 @@
 
 #define MAJOR 1
 #define MINOR 4
-#define PATCH 1
+#define PATCH 2
 
 unsigned parsecmd(const char *cmd, char **next, unsigned len)
 {
@@ -89,6 +89,16 @@ unsigned parsecmd(const char *cmd, char **next, unsigned len)
                 }
                 fgfmt(y);
                 break;
+            case'j':
+                if(used == len)
+                    y = 0;
+                else
+                {
+                    y = 0xffffff - strtol(next[used], NULL, 16);
+                    ++used;
+                }
+                fgfmt(y);
+                break;
             case'K':
                 bgfmt8(BLACK);
                 break;
@@ -122,6 +132,16 @@ unsigned parsecmd(const char *cmd, char **next, unsigned len)
                 else
                 {
                     y = strtol(next[used], NULL, 16);
+                    ++used;
+                }
+                bgfmt(y);
+                break;
+            case'J':
+                if(used == len)
+                    y = 0xffffff;
+                else
+                {
+                    y = 0xffffff - strtol(next[used], NULL, 16);
                     ++used;
                 }
                 bgfmt(y);
@@ -229,6 +249,7 @@ int main(int argl, char *argv[])
         puts("Capitalized sets background colour.");
         puts("Commands F and O sets the foreground or background colour to default.");
         puts("Commands a and A sets foreground or background colour to a true colour, based on next hexadecimal value.");
+        puts("Commands j and J are like a and A, but uses cyan-magenta-yellow colour mixing.");
         puts("Defaults to white for foreground and black for background");
         puts("Command I will start interactive mode, press q to exit.");
         puts("Command . will reset formatting to normal.");

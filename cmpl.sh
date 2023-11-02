@@ -10,12 +10,7 @@
 opts='-std=c99 -O3 -c'
 files='fmt interactive mvmnt tmctl'
 for i in $files; do
-    objtime=0
-    if test -e ${i}.o; then
-        objtime=$(stat -c %Y ${i}.o)
-    fi
-    srctime=$(stat -c %Y ${i}.c)
-    if test $objtime -le $srctime; then
+    if ! test -e ${i}.o; then
         cc $opts ${i}.c
     fi
 done
